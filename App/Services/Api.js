@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'https://api.github.com/') => {
+const create = (baseURL = 'https://newsapi.org') => {
   // ------
   // STEP 1
   // ------
@@ -34,9 +34,9 @@ const create = (baseURL = 'https://api.github.com/') => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  const getRoot = () => api.get('')
-  const getRate = () => api.get('rate_limit')
-  const getUser = (username) => api.get('search/users', {q: username})
+  const getNews = (search) => {
+    return api.get(`/v2/top-headlines?${search ? `q=${search}&` : ''}country=id&apiKey=aa83fa02d92d4edfb8ec387d1ace76ed`)
+  }
 
   // ------
   // STEP 3
@@ -52,9 +52,7 @@ const create = (baseURL = 'https://api.github.com/') => {
   //
   return {
     // a list of the API functions from step 2
-    getRoot,
-    getRate,
-    getUser
+    getNews
   }
 }
 
